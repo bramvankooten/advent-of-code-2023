@@ -14,15 +14,17 @@ lines = file.readlines()
 total = 0
 
 for i, line in enumerate(lines):
+    requirements = {
+        'red': 0,
+        'green': 0,
+        'blue': 0
+    }
     num_cubes = [l.split(' ') for l in re.findall(r'\d+ \w+', line)]
-    valid = True
     for cubes in num_cubes:
+        if int(cubes[0]) > requirements[cubes[1]]:
+            requirements[cubes[1]] = int(cubes[0])
 
-        if int(cubes[0]) > constraints[cubes[1]]:
-            valid = False
-            break
-    if valid:
-        total += i + 1
+    total += (requirements['red'] * requirements['green'] * requirements['blue'])
     
 
 print(total)
