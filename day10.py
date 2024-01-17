@@ -3,7 +3,7 @@ import numpy as np
 
 file = open('data/day10_1.test', 'r')
 file = open('data/day10_2.test', 'r')
-# file = open('data/day10.in', 'r')
+file = open('data/day10.in', 'r')
 
 lines = [list(l.strip()) for l in file.readlines()]
 
@@ -254,10 +254,27 @@ while run:
 
 print('Part one:', len(side_one) - 1)
 
-test = np.empty_like(updated_grid)
-test[:][:] = '.'
+grid_two = np.empty_like(updated_grid)
+grid_two[:][:] = '.'
 for x,y in side_one:
-    test[x][y] = updated_grid[x][y]
+    grid_two[x][y] = updated_grid[x][y]
 for x,y in side_two:
-    test[x][y] = updated_grid[x][y]
-print(test)
+    grid_two[x][y] = updated_grid[x][y]
+
+borders = ['|', 'L', 'J'] 
+
+part_two = 0
+
+for line in grid_two:
+    within_borders = False
+    count = 0
+    for char in line:
+        if char == '.' and within_borders:
+            count += 1
+        elif char in borders:
+            within_borders = not within_borders
+    part_two += count
+
+print('Part two:', part_two)
+
+
